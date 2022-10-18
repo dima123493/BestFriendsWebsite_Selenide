@@ -9,7 +9,7 @@ public class Generator {
         return from + RND.nextInt(upTo - from);
     }
 
-    public String nameGenerator() {
+    public static String nameGenerator() {
         String alphabet = "abcdefghijklmnopqrstuvwxyz";
         StringBuilder sb = new StringBuilder();
         int wordLength = randomInt(4, 50);
@@ -22,7 +22,7 @@ public class Generator {
         return String.valueOf(randomString.toUpperCase().charAt(0));
     }
 
-    public String passwordGenerator() {
+    public static String passwordGenerator() {
         String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*())_+=-~`?><:\"";
         StringBuilder sb = new StringBuilder();
         int wordLength = randomInt(6, 18);
@@ -34,7 +34,7 @@ public class Generator {
         return sb.toString();
     }
 
-    public String numberGenerator() {
+    public static String numberGenerator() {
         StringBuilder sb = new StringBuilder();
         int wordLength = randomInt(10, 13);
         for (int i = 0; i < wordLength; i++) {

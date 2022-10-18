@@ -1,29 +1,41 @@
 package Utils;
 
+import Logic.Generator;
 import Pages.LoginPage;
 import Pages.MainPage;
 import Pages.RegistrationPage;
+import com.codeborne.selenide.Selenide;
 import org.testng.annotations.Test;
 
-import static com.codeborne.selenide.Selenide.open;
 import static org.testng.AssertJUnit.assertEquals;
 
-public class Tests {
-    String baseUrl = "http://opencart.qatestlab.net";
+public class Tests extends BrowserManager{
+    final String baseUrl = "http://opencart.qatestlab.net";
+    String savedEmail = Generator.nameGenerator()+"@test.com";
+    String savedPassword = Generator.passwordGenerator();
+    String firstAndLatName = Generator.nameGenerator();
+    String phone = Generator.numberGenerator();
 
     @Test
     public void openRegistrationPageFromTheMainPage() {
-        open(baseUrl);
+        openBrowser(baseUrl);
         MainPage mainPage = new MainPage();
-        mainPage.goToRegistrationPage();
+        mainPage.myAccountButton();
+        mainPage.registerButton();
         assertEquals(mainPage.getResultText(), "Register Account");
+        Selenide.closeWebDriver();
     }
 
     @Test
     public void registrationOfUser() {
-        open(baseUrl + "/index.php?route=account/register");
+        openBrowser(baseUrl + "/index.php?route=account/register");
         RegistrationPage registrationPage = new RegistrationPage();
-        registrationPage.inputUserCredentialsIntoFields();
+        registrationPage.firstName(firstAndLatName);
+        registrationPage.lastName(firstAndLatName);
+        registrationPage.email(savedEmail);
+        registrationPage.phoneNumber(phone);
+        registrationPage.setPassword(savedPassword);
+        registrationPage.passwordConfirmation(savedPassword);
         registrationPage.agreeWithSubscription();
         registrationPage.agreeWithPolicy();
         registrationPage.register();
@@ -34,10 +46,12 @@ public class Tests {
     public void loginWithRegisteredUser() {
         LoginPage login = new LoginPage();
         try {
-            open(baseUrl + "/index.php?route=account/login");
-            login.loginToAccount();
+            openBrowser(baseUrl + "/index.php?route=account/login");
+            login.enterEmail("unique@test.com");
+            login.enterPassword("unique1234");
+            login.loginButton();
         } catch (Exception e) {
-            System.out.println("No user credentials are specified");
+            System.out.println("User with such credentials is not registered");
         }
         assertEquals(login.checkResult(), "My Orders");
         login.logout();

@@ -11,17 +11,15 @@ public class LoginPage {
     By result = By.xpath("//h2[normalize-space()='My Orders']");
     By logout = By.xpath("//a[normalize-space()='Sign Out']");
 
-    public void loginToAccount() {
-        RegistrationPage regPage = new RegistrationPage();
-
-        String email = regPage.getSavedEmail();
-        email = email.isEmpty() ? "test@tet.com" : email;
-
-        String password = regPage.getSavedPassword();
-        password = password.isEmpty() ? "password1234" : password;
-
+    public void enterEmail(String email) {
         $(registeredUserEmail).setValue(email);
+    }
+
+    public void enterPassword(String password) {
         $(registeredUserPassword).setValue(password);
+    }
+
+    public void loginButton() {
         $(loginButton).click();
     }
 
@@ -33,3 +31,9 @@ public class LoginPage {
         $(logout).hover().click();
     }
 }
+
+//RegistrationPage regPage = new RegistrationPage();
+//String email = regPage.getSavedEmail();
+//email = email.isEmpty() ? "test@tet.com" : email;
+// String password = regPage.getSavedPassword();
+// password = password.isEmpty() ? "password1234" : password;

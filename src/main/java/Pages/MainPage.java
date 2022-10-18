@@ -9,8 +9,11 @@ public class MainPage {
     By registerButton = By.xpath("//a[normalize-space()='Register']");
     By result = By.xpath("//h1[normalize-space()='Register Account']");
 
-    public void goToRegistrationPage() {
+    public void myAccountButton() {
         $(myAccountButton).click();
+    }
+
+    public void registerButton() {
         $(registerButton).click();
     }
 
