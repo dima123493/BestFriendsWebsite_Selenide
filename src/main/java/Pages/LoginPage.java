@@ -10,6 +10,7 @@ public class LoginPage {
     By loginButton = By.cssSelector("input[value='Login']");
     By result = By.xpath("//h2[normalize-space()='My Orders']");
     By logout = By.xpath("//a[normalize-space()='Sign Out']");
+    By returningCustomerTitle = By.xpath("//h2[normalize-space()='Returning Customer']");
 
     public void enterEmail(String email) {
         $(registeredUserEmail).setValue(email);
@@ -24,11 +25,15 @@ public class LoginPage {
     }
 
     public String checkResult() {
-      return $(result).getText();
+        return $(result).getText();
     }
 
     public void logout() {
         $(logout).hover().click();
+    }
+
+    public String returningCustomerTitle() {
+        return $(returningCustomerTitle).getText();
     }
 }
 

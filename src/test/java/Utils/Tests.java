@@ -1,6 +1,7 @@
 package Utils;
 
 import Logic.Generator;
+import Pages.ForgetPasswordPage;
 import Pages.LoginPage;
 import Pages.MainPage;
 import Pages.RegistrationPage;
@@ -9,16 +10,16 @@ import org.testng.annotations.Test;
 
 import static org.testng.AssertJUnit.assertEquals;
 
-public class Tests extends BrowserManager{
-    final String baseUrl = "http://opencart.qatestlab.net";
-    String savedEmail = Generator.nameGenerator()+"@test.com";
+public class Tests {
+
+    String savedEmail = Generator.nameGenerator() + "@test.com";
     String savedPassword = Generator.passwordGenerator();
     String firstAndLatName = Generator.nameGenerator();
     String phone = Generator.numberGenerator();
 
     @Test
     public void openRegistrationPageFromTheMainPage() {
-        openBrowser(baseUrl);
+        Navigator.openMainPage();
         MainPage mainPage = new MainPage();
         mainPage.myAccountButton();
         mainPage.registerButton();
@@ -28,7 +29,7 @@ public class Tests extends BrowserManager{
 
     @Test
     public void registrationOfUser() {
-        openBrowser(baseUrl + "/index.php?route=account/register");
+        Navigator.openRegistrationPage();
         RegistrationPage registrationPage = new RegistrationPage();
         registrationPage.firstName(firstAndLatName);
         registrationPage.lastName(firstAndLatName);
@@ -46,7 +47,7 @@ public class Tests extends BrowserManager{
     public void loginWithRegisteredUser() {
         LoginPage login = new LoginPage();
         try {
-            openBrowser(baseUrl + "/index.php?route=account/login");
+            Navigator.openLoginPage();
             login.enterEmail("unique@test.com");
             login.enterPassword("unique1234");
             login.loginButton();
@@ -57,4 +58,31 @@ public class Tests extends BrowserManager{
         login.logout();
     }
 
+    @Test
+    public void restoreForgottenPassword() {
+        ForgetPasswordPage restorePassword = new ForgetPasswordPage();
+        Navigator.openForgetPasswordPage();
+        restorePassword.email("unique@test.com");
+        restorePassword.submitButton();
+        LoginPage login = new LoginPage();
+        assertEquals("Returning Customer", login.returningCustomerTitle());
+    }
+
+    @Test
+    public void subscribeToStoreNews() {
+        MainPage mainPage = new MainPage();
+        Navigator.openMainPage();
+        mainPage.newsLetterSubscriptionField(savedEmail);
+        mainPage.newsLetterSubscriptionButton();
+        assertEquals("You have successfully subscribed", mainPage.successSubscriptionTitle());
+    }
+
+    @Test
+    public void invalidEmailSub() {
+        MainPage mainPage = new MainPage();
+        Navigator.openMainPage();
+        mainPage.newsLetterSubscriptionField("invalidEmail.com");
+        mainPage.newsLetterSubscriptionButton();
+        assertEquals("Please enter a valid e-mail!", mainPage.failedSubscriptionTitle());
+    }
 }

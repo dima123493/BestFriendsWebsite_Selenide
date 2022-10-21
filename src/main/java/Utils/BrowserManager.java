@@ -9,7 +9,7 @@ import static com.codeborne.selenide.Selenide.open;
 public class BrowserManager {
 
     @Before
-    public void openBrowser(String url){
+    public static void openBrowser(String url){
         open(url);
     }
 
