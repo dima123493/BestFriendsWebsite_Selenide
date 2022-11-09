@@ -1,38 +1,51 @@
-package Utils;
+package SmokeTests;
 
-import Logic.Generator;
-import Pages.ForgetPasswordPage;
-import Pages.LoginPage;
-import Pages.MainPage;
-import Pages.RegistrationPage;
-import com.codeborne.selenide.Selenide;
-import org.testng.annotations.Test;
+import logic.Generator;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import pages.ForgetPasswordPage;
+import pages.LoginPage;
+import pages.MainPage;
+import pages.RegistrationPage;
+import pages.header.LanguageChanger;
+import utils.Navigator;
 
-import static org.testng.AssertJUnit.assertEquals;
+import static com.codeborne.selenide.Selenide.closeWebDriver;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class Tests {
+class Tests {
 
     String savedEmail = Generator.nameGenerator() + "@test.com";
     String savedPassword = Generator.passwordGenerator();
-    String firstAndLatName = Generator.nameGenerator();
+    String firstName = Generator.nameGenerator();
+    String lastName = Generator.nameGenerator();
     String phone = Generator.numberGenerator();
+    LanguageChanger language = new LanguageChanger();
 
-    @Test
-    public void openRegistrationPageFromTheMainPage() {
-        Navigator.openMainPage();
-        MainPage mainPage = new MainPage();
-        mainPage.myAccountButton();
-        mainPage.registerButton();
-        assertEquals(mainPage.getResultText(), "Register Account");
-        Selenide.closeWebDriver();
+// open new tab instead of new session
+
+    @AfterEach
+    public void closeBrowser() {
+        closeWebDriver();
     }
 
     @Test
-    public void registrationOfUser() {
+    void openRegistrationPageFromTheMainPage() {
+        Navigator.openMainPage();
+        MainPage mainPage = new MainPage();
+        language.changeLanguageToEnglish();
+        mainPage.myAccountButton();
+        mainPage.registerButton();
+        assertEquals("Register Account", mainPage.getResultText());
+    }
+
+    @Test
+    void registrationOfUser() {
         Navigator.openRegistrationPage();
         RegistrationPage registrationPage = new RegistrationPage();
-        registrationPage.firstName(firstAndLatName);
-        registrationPage.lastName(firstAndLatName);
+        language.changeLanguageToEnglish();
+        registrationPage.firstName(firstName);
+        registrationPage.lastName(lastName);
         registrationPage.email(savedEmail);
         registrationPage.phoneNumber(phone);
         registrationPage.setPassword(savedPassword);
@@ -40,28 +53,30 @@ public class Tests {
         registrationPage.agreeWithSubscription();
         registrationPage.agreeWithPolicy();
         registrationPage.register();
-        assertEquals(registrationPage.getResult(), "Your Account Has Been Created!");
+        assertEquals("Your Account Has Been Created!", registrationPage.getResult());
     }
 
     @Test
-    public void loginWithRegisteredUser() {
+    void loginWithRegisteredUser() {
         LoginPage login = new LoginPage();
         try {
             Navigator.openLoginPage();
+            language.changeLanguageToEnglish();
             login.enterEmail("unique@test.com");
             login.enterPassword("unique1234");
             login.loginButton();
         } catch (Exception e) {
             System.out.println("User with such credentials is not registered");
         }
-        assertEquals(login.checkResult(), "My Orders");
+        assertEquals("My Orders", login.checkResult());
         login.logout();
     }
 
     @Test
-    public void restoreForgottenPassword() {
-        ForgetPasswordPage restorePassword = new ForgetPasswordPage();
+    void restoreForgottenPassword() {
         Navigator.openForgetPasswordPage();
+        language.changeLanguageToEnglish();
+        ForgetPasswordPage restorePassword = new ForgetPasswordPage();
         restorePassword.email("unique@test.com");
         restorePassword.submitButton();
         LoginPage login = new LoginPage();
@@ -69,18 +84,20 @@ public class Tests {
     }
 
     @Test
-    public void subscribeToStoreNews() {
+    void subscribeToStoreNews() {
         MainPage mainPage = new MainPage();
         Navigator.openMainPage();
-        mainPage.newsLetterSubscriptionField(savedEmail);
+        language.changeLanguageToEnglish();
+        mainPage.newsLetterSubscriptionField(Generator.nameGenerator() + "@test.com");
         mainPage.newsLetterSubscriptionButton();
         assertEquals("You have successfully subscribed", mainPage.successSubscriptionTitle());
     }
 
     @Test
-    public void invalidEmailSub() {
+    void invalidEmailSub() {
         MainPage mainPage = new MainPage();
         Navigator.openMainPage();
+        language.changeLanguageToEnglish();
         mainPage.newsLetterSubscriptionField("invalidEmail.com");
         mainPage.newsLetterSubscriptionButton();
         assertEquals("Please enter a valid e-mail!", mainPage.failedSubscriptionTitle());

@@ -1,4 +1,4 @@
-package Pages;
+package pages;
 
 import com.codeborne.selenide.Condition;
 import org.openqa.selenium.By;
@@ -6,8 +6,8 @@ import org.openqa.selenium.By;
 import static com.codeborne.selenide.Selenide.$;
 
 public class MainPage {
-    By myAccountButton = By.xpath("//span[contains(text(),'My Account')]");
-    By registerButton = By.xpath("//a[normalize-space()='Register']");
+    By myAccountButton = By.xpath("//*[@id=\"top-links\"]/ul/li/span/span");
+    By registerButton = By.xpath("//*[@id=\"top-links\"]//li[1]/a");
     By result = By.xpath("//h1[normalize-space()='Register Account']");
     By newsLetterSubscriptionField = By.id("input-zemez-newsletter-email");
     By newsLetterSubscriptionButton = By.id("zemez-newsletter-button");

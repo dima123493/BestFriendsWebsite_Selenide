@@ -1,4 +1,4 @@
-package Pages;
+package pages;
 
 import org.openqa.selenium.By;
 
@@ -6,12 +6,11 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.executeJavaScript;
 
 public class RegistrationPage {
-    By firstName = By.id("input-firstname");
-    By lastName = By.id("input-lastname");
-    By email = By.id("input-email");
-    By phoneNumber = By.id("input-telephone");
-    By password = By.id("input-password");
-    By passwordConfirmation = By.id("input-confirm");
+    By firstName = By.xpath("//*[@id=\"input-firstname\"]");
+    By lastName = By.xpath("//*[@id=\"input-lastname\"]");
+    By email = By.xpath("//*[@id=\"input-email\"]");
+    By phoneNumber = By.xpath("//*[@id=\"input-telephone\"]");
+    By password = By.id("input-password");By passwordConfirmation = By.id("input-confirm");
     By subscribeRadioButton = By.xpath("//*[@id=\"content\"]/form/fieldset[3]/div/div/label[1]");
     By privacyPolicy = By.xpath("//input[@name='agree']");
     By submitButton = By.cssSelector("input[value='Continue']");

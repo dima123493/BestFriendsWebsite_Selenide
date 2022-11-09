@@ -1,4 +1,4 @@
-package Logic;
+package logic;
 
 import java.util.Random;
 
@@ -18,8 +18,7 @@ public class Generator {
             char randomChar = alphabet.charAt(index);
             sb.append(randomChar);
         }
-        String randomString = sb.toString();
-        return String.valueOf(randomString.toUpperCase().charAt(0));
+        return sb.toString();
     }
 
     public static String passwordGenerator() {
@@ -35,10 +34,11 @@ public class Generator {
     }
 
     public static String numberGenerator() {
+        String numbers = "0123456789";
         StringBuilder sb = new StringBuilder();
         int wordLength = randomInt(10, 13);
         for (int i = 0; i < wordLength; i++) {
-            int index = RND.nextInt();
+            int index = RND.nextInt(numbers.length());
             sb.append(index);
         }
         return sb.toString();
