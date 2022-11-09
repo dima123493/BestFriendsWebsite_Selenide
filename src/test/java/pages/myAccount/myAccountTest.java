@@ -1,9 +1,9 @@
 package pages.myAccount;
 
 import logic.Generator;
-import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import pages.LoginPage;
 import pages.header.LanguageChanger;
 import utils.Navigator;
