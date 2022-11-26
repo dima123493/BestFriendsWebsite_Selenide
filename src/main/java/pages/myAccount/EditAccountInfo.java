@@ -39,4 +39,8 @@ public class EditAccountInfo {
     public void continueButton() {
         $(continueButton).click();
     }
+
+    public String getFirstName() {
+        return $(firstName).getText();
+    }
 }

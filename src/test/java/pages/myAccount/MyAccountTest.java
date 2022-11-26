@@ -9,9 +9,9 @@ import pages.header.LanguageChanger;
 import utils.Navigator;
 
 import static com.codeborne.selenide.Selenide.closeWebDriver;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class myAccountTest {
+class MyAccountTest {
     final String email = "unique@test.com";
 
     static LanguageChanger language = new LanguageChanger();
@@ -37,18 +37,34 @@ public class myAccountTest {
 
     @Test
     public void editMyPersonalDetails() {
-        String temporaryEmail = Generator.nameGenerator() + "@test.com";
         EditAccountInfo page = new EditAccountInfo();
         Navigator.openEditAccountInformationPage();
         page.changeFirstName("Dmytro");
         page.changeLastName("Zubenko");
-        page.changeEmail(temporaryEmail);
         page.changePhoneNumber(Generator.numberGenerator());
         page.continueButton();
         Navigator.openEditAccountInformationPage();
-        assertEquals("Dmytro",page.firstName.toString());
-        page.changeEmail(email);
-        page.continueButton();
+        assertEquals("Dmytro",page.getFirstName());
+    }
+
+    @Test
+    public void changeSubscriptionToYes() {
+        Newsletter page = new Newsletter();
+        Navigator.openNewsletterSubscriptionPage();
+        page.subscribeYes();
+        Navigator.openNewsletterSubscriptionPage();
+        assertTrue(page.subscribeYesCheck());
+        assertFalse(page.subscribeNoCheck());
+    }
+
+    @Test
+    public void changeSubscriptionToNo() {
+        Newsletter page = new Newsletter();
+        Navigator.openNewsletterSubscriptionPage();
+        page.subscribeNo();
+        Navigator.openNewsletterSubscriptionPage();
+        assertTrue(page.subscribeNoCheck());
+        assertFalse(page.subscribeYesCheck());
     }
 
 }
