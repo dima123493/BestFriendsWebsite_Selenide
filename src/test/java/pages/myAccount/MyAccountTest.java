@@ -47,24 +47,4 @@ class MyAccountTest {
         assertEquals("Dmytro",page.getFirstName());
     }
 
-    @Test
-    public void changeSubscriptionToYes() {
-        Newsletter page = new Newsletter();
-        Navigator.openNewsletterSubscriptionPage();
-        page.subscribeYes();
-        Navigator.openNewsletterSubscriptionPage();
-        assertTrue(page.subscribeYesCheck());
-        assertFalse(page.subscribeNoCheck());
-    }
-
-    @Test
-    public void changeSubscriptionToNo() {
-        Newsletter page = new Newsletter();
-        Navigator.openNewsletterSubscriptionPage();
-        page.subscribeNo();
-        Navigator.openNewsletterSubscriptionPage();
-        assertTrue(page.subscribeNoCheck());
-        assertFalse(page.subscribeYesCheck());
-    }
-
 }

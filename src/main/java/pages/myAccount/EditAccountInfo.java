@@ -5,7 +5,7 @@ import org.openqa.selenium.By;
 import static com.codeborne.selenide.Selenide.$;
 
 public class EditAccountInfo {
-    By firstName = By.id("input-firstname");
+    By firstName = By.xpath("//*[@id=\"input-firstname\"]");
     By lastName = By.id("input-lastname");
     By email = By.id("input-email");
     By phoneNumber = By.id("input-telephone");
@@ -41,6 +41,6 @@ public class EditAccountInfo {
     }
 
     public String getFirstName() {
-        return $(firstName).getText();
+        return $(firstName).getValue();
     }
 }
